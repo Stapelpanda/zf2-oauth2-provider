@@ -1,13 +1,13 @@
 # oauth2-provider
 
-A simple and clean Zend Framework 2 wrapper for the oauth2-server-php library.
+A simple and clean Laminas wrapper for the oauth2-server-php library.
 
 The main features:
-- It allows OAuth2 Server instances to be configured via the ZF Service Manager
-- It allows the OAuth2 Server to work with ZF Request and Response objects
+- It allows OAuth2 Server instances to be configured via the Laminas Service Manager
+- It allows the OAuth2 Server to work with Laminas Request and Response objects
 - It is flexible and minimally invasive, leaving you to manage URLs and routing however you wish
-- You can accept OAuth 2.0 access tokens via [Zend\Authentication] (http://framework.zend.com/manual/current/en/modules/zend.authentication.intro.html)
-- You can accept OAuth 2.0 access tokens via [ZF\MvcAuth] (https://github.com/zfcampus/zf-mvc-auth) 
+- You can accept OAuth 2.0 access tokens via [Laminas\Authentication] (http://framework.zend.com/manual/current/en/modules/zend.authentication.intro.html)
+- ~~You can accept OAuth 2.0 access tokens via [ZF\MvcAuth] (https://github.com/zfcampus/zf-mvc-auth)~~ _note: MvcAuth does not support laminas at the moment_ 
 
 
 ## Installation
@@ -31,7 +31,7 @@ For example, put this in your `config/autoload/global.php` or `module/Applicatio
     'service_manager' => [
         'factories' => [
             //Register the factory with whatever service name you like
-            'MyOAuth2Provider' => 'Codeacious\OAuth2Provider\ProviderFactory',
+            'MyOAuth2Provider' => \Codeacious\OAuth2Provider\ProviderFactory::class,
         ],
     ],
     
@@ -52,7 +52,7 @@ For example, put this in your `config/autoload/global.php` or `module/Applicatio
 ```php
     'service_manager' => [
         'abstract_factories' => [
-            'Codeacious\OAuth2Provider\ProviderAbstractFactory',
+            \Codeacious\OAuth2Provider\ProviderAbstractFactory::class,
         ],
     ],
     
@@ -251,7 +251,7 @@ The Authorization endpoint requires you to implement a login form or other mecha
     }
 ```
 
-### Accepting tokens using ZF\MvcAuth
+### Accepting tokens using 'Laminas\ApiTools\MvcAuth
 
 ```php
     'service_manager' => [

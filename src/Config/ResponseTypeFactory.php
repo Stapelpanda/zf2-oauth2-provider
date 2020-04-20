@@ -20,6 +20,9 @@ class ResponseTypeFactory extends Factory
      */
     public function create($config, $name=null)
     {
+        /**
+         * @var ResponseTypeInterface $responseType
+         */
         $responseType = $this->resolveReference($config);
         if (!$responseType)
         {

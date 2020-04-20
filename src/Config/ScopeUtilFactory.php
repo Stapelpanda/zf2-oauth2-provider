@@ -20,6 +20,9 @@ class ScopeUtilFactory extends Factory
      */
     public function create($config, $name=null)
     {
+        /**
+         * @var ScopeInterface $scopeUtil
+         */
         $scopeUtil = $this->resolveReference($config);
         if (!$scopeUtil)
         {

@@ -10,8 +10,8 @@ use OAuth2\Server as OAuthServer;
 use OAuth2\RequestInterface as OAuthRequest;
 use OAuth2\Response as OAuthResponse;
 
-use Zend\Http\PhpEnvironment\Request as HttpRequest;
-use Zend\Http\Response as HttpResponse;
+use Laminas\Http\PhpEnvironment\Request as HttpRequest;
+use Laminas\Http\Response as HttpResponse;
 
 use Codeacious\OAuth2Provider\Authentication\AccessTokenIdentity;
 
@@ -164,6 +164,7 @@ class Provider
      * access token).
      *
      * @return AccessTokenIdentity|null
+     * @throws \Exception when access token contains invalid expiration date
      */
     public function getIdentity()
     {

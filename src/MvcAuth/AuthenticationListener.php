@@ -6,11 +6,11 @@
 
 namespace Codeacious\OAuth2Provider\MvcAuth;
 
-use ZF\MvcAuth\MvcAuthEvent;
-use ZF\MvcAuth\Identity\AuthenticatedIdentity;
-use ZF\MvcAuth\Identity\GuestIdentity;
-use Zend\Http\PhpEnvironment\Request as HttpRequest;
-use Zend\Authentication\Adapter\AdapterInterface;
+use Laminas\ApiTools\MvcAuth\MvcAuthEvent;
+use Laminas\ApiTools\MvcAuth\Identity\AuthenticatedIdentity;
+use Laminas\ApiTools\MvcAuth\Identity\GuestIdentity;
+use Laminas\Http\PhpEnvironment\Request as HttpRequest;
+use Laminas\Authentication\Adapter\AdapterInterface;
 
 /**
  * Event listener which authenticates HTTP requests using an adapter.
@@ -108,7 +108,7 @@ class AuthenticationListener
         else
             $identity = new GuestIdentity();
 
-        $mvcEvent->setParam('ZF\MvcAuth\Identity', $identity);
+        $mvcEvent->setParam("Laminas\ApiTools\MvcAuth\Identity", $identity);
         return $identity;
     }
 

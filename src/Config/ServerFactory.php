@@ -7,6 +7,7 @@
 namespace Codeacious\OAuth2Provider\Config;
 
 use Codeacious\OAuth2Provider\Exception\ConfigurationException;
+use OAuth2\GrantType\GrantTypeInterface;
 use OAuth2\Server;
 
 class ServerFactory extends Factory
@@ -94,6 +95,9 @@ class ServerFactory extends Factory
         //Add grant types
         if (isset($config['grant_types']) && is_array($config['grant_types']))
         {
+            /**
+             * @var GrantTypeFactory $grantTypeFactory
+             */
             $grantTypeFactory = $this->getConfigFactory('GrantTypeFactory');
             foreach ($config['grant_types'] as $key => $val)
             {

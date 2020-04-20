@@ -7,11 +7,12 @@
 namespace Codeacious\OAuth2Provider;
 
 use Codeacious\OAuth2Provider\Exception\ConfigurationException;
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 
 class ProviderAbstractFactory implements AbstractFactoryInterface
 {
+
     /**
      * @var array
      */
@@ -31,32 +32,26 @@ class ProviderAbstractFactory implements AbstractFactoryInterface
         $this->serviceConfigKey = $serviceConfigKey;
     }
 
-    /**
-     * @param ServiceLocatorInterface $services
-     * @param string $name
-     * @param string $requestedName
-     * @return bool
-     */
-    public function canCreateServiceWithName(ServiceLocatorInterface $services, $name,
-                                             $requestedName)
+    public function canCreate(ContainerInterface $container, $requestedName)
     {
-        $config = $this->getConfig($services);
+        $config = $this->getConfig($container);
         return (isset($config[$requestedName]) && is_array($config[$requestedName]));
     }
 
     /**
-     * @param ServiceLocatorInterface $services
-     * @param string $name
+     * @param ContainerInterface $container
      * @param string $requestedName
+     * @param mixed $options
      * @return Provider
      */
-    public function createServiceWithName(ServiceLocatorInterface $services, $name, $requestedName)
+
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $this->getConfig($services);
+        $config = $this->getConfig($container);
         $config = $config[$requestedName];
 
         /* @var $serverFactory Config\Factory */
-        $serverFactory = $services->get('Codeacious\OAuth2Provider\Config\ServerFactory');
+        $serverFactory = $container->get(Config\ServerFactory::class);
         $server = $serverFactory->create($config, $requestedName);
 
         $class = self::DEFAULT_PROVIDER_CLASS;
@@ -67,15 +62,15 @@ class ProviderAbstractFactory implements AbstractFactoryInterface
                 throw new ConfigurationException('Provider class "'.$class.'" not found');
         }
         /* @var $provider Provider */
-        $provider = new $class($server, $services->get('Request'));
+        $provider = new $class($server, $container->get('Request'));
         return $provider;
     }
 
     /**
-     * @param ServiceLocatorInterface $services
+     * @param ContainerInterface $services
      * @return array
      */
-    private function getConfig(ServiceLocatorInterface $services)
+    private function getConfig(ContainerInterface $services)
     {
         if ($this->config === null)
         {

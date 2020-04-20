@@ -20,6 +20,9 @@ class ClientAssertionTypeFactory extends Factory
      */
     public function create($config, $name=null)
     {
+        /**
+         * @var ClientAssertionTypeInterface $clientAssertionType
+         */
         $clientAssertionType = $this->resolveReference($config);
         if (!$clientAssertionType)
         {

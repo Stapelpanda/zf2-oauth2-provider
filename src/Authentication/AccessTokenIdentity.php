@@ -41,6 +41,7 @@ class AccessTokenIdentity
 
     /**
      * @param array $tokenData
+     * @throws \Exception when an invalid expiration date is given
      */
     public function __construct(array $tokenData)
     {

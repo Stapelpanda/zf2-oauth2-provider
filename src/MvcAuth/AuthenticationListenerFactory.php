@@ -7,9 +7,13 @@
 namespace Codeacious\OAuth2Provider\MvcAuth;
 
 use Codeacious\OAuth2Provider\Authentication\AccessTokenAdapter;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Http\PhpEnvironment\Request as HttpRequest;
+use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\ContainerException;
+use Laminas\ApiTools\MvcAuth\Authentication\DefaultAuthenticationListener;
+use Laminas\Http\PhpEnvironment\Request as HttpRequest;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Factory to create the AuthenticationListener service.
@@ -19,20 +23,17 @@ use Zend\Http\PhpEnvironment\Request as HttpRequest;
  */
 class AuthenticationListenerFactory implements FactoryInterface
 {
-    /**
-     * @param ServiceLocatorInterface $services
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $services)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $services->get('config');
+
+        $config = $container->get('config');
         $authConfig = $config['zf-mvc-auth'];
         if (isset($authConfig['authentication']['oauth2provider'])
-            && $services->has('Request')
-            && ($services->get('Request') instanceof HttpRequest))
+            && $container->has('Request')
+            && ($container->get('Request') instanceof HttpRequest))
         {
             $adapter = new AccessTokenAdapter(
-                $services->get($authConfig['authentication']['oauth2provider'])
+                $container->get($authConfig['authentication']['oauth2provider'])
             );
 
             $listener = new AuthenticationListener($adapter);
@@ -45,8 +46,8 @@ class AuthenticationListenerFactory implements FactoryInterface
         else
         {
             //Fall back to the default factory
-            $factory = new \ZF\MvcAuth\Factory\DefaultAuthenticationListenerFactory();
-            return $factory->createService($services);
+            $factory = new \Laminas\ApiTools\MvcAuth\Factory\DefaultAuthenticationListenerFactory();
+            return $factory($container, DefaultAuthenticationListener::class);
         }
     }
 }

@@ -6,6 +6,8 @@
 
 namespace Codeacious\OAuth2Provider;
 
+use Laminas\Loader\StandardAutoloader;
+
 /**
  * The module class.
  */
@@ -19,7 +21,7 @@ class Module
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
+            StandardAutoloader::class => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__.'/src',
                 ),

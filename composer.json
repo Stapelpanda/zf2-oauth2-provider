@@ -11,17 +11,19 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
+        "php": "^5.6 || ^7.0",
+        "ext-json": "*",
         "bshaffer/oauth2-server-php": "~1.0",
-        "zendframework/zend-http": "~2.0",
-        "zendframework/zend-servicemanager": "~2.0",
-        "zendframework/zend-filter": "~2.0"
+        "laminas/laminas-http": "^2.11",
+        "laminas/laminas-filter": "^2.9",
+        "laminas/laminas-servicemanager": "^3.4",
+        "laminas/laminas-authentication": "^2.7"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "3.7.*"
+        "phpunit/phpunit": "3.7.*"
     },
     "suggest": {
-        "zfcampus/zf-mvc-auth": "Use with the included adapter to authenticate requests using access tokens"
+        "laminas-api-tools/api-tools-mvc-auth": "Use with the included adapter to authenticate requests using access tokens"
     },
     "autoload": {
         "psr-4": {

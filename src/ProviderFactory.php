@@ -7,8 +7,8 @@
 namespace Codeacious\OAuth2Provider;
 
 use Codeacious\OAuth2Provider\Exception\ConfigurationException;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ProviderFactory implements FactoryInterface
 {
@@ -27,18 +27,19 @@ class ProviderFactory implements FactoryInterface
     }
 
     /**
-     * @param ServiceLocatorInterface $services
-     * @param string $name
+     * @param ContainerInterface $container
      * @param string $requestedName
+     * @param mixed $options
      * @return mixed
      */
-    public function createService(ServiceLocatorInterface $services, $name=null, $requestedName=null)
+
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = array();
 
-        if ($services->has('Config'))
+        if ($container->has('Config'))
         {
-            $c = $services->get('Config');
+            $c = $container->get('Config');
             if (isset($c[$this->serviceConfigKey])
                 && is_array($c[$this->serviceConfigKey]))
             {
@@ -47,7 +48,7 @@ class ProviderFactory implements FactoryInterface
         }
 
         /* @var $serverFactory Config\Factory */
-        $serverFactory = $services->get('Codeacious\OAuth2Provider\Config\ServerFactory');
+        $serverFactory = $container->get(Config\ServerFactory::class);
         $server = $serverFactory->create($config, $this->serviceConfigKey);
 
         $class = self::DEFAULT_PROVIDER_CLASS;
@@ -58,7 +59,7 @@ class ProviderFactory implements FactoryInterface
                 throw new ConfigurationException('Provider class "'.$class.'" not found');
         }
         /* @var $provider Provider */
-        $provider = new $class($server, $services->get('Request'));
+        $provider = new $class($server, $container->get('Request'));
         return $provider;
     }
 

@@ -1,22 +1,15 @@
-<?php
+<?php namespace Codeacious\OAuth2Provider;
 
-return array(
-    'service_manager' => array(
-        'factories' => array(
-            'Codeacious\OAuth2Provider\Config\ClientAssertionTypeFactory'
-                    => 'Codeacious\OAuth2Provider\Config\FactoryFactory',
-            'Codeacious\OAuth2Provider\Config\GrantTypeFactory'
-                    => 'Codeacious\OAuth2Provider\Config\FactoryFactory',
-            'Codeacious\OAuth2Provider\Config\ResponseTypeFactory'
-                    => 'Codeacious\OAuth2Provider\Config\FactoryFactory',
-            'Codeacious\OAuth2Provider\Config\ScopeUtilFactory'
-                    => 'Codeacious\OAuth2Provider\Config\FactoryFactory',
-            'Codeacious\OAuth2Provider\Config\ServerFactory'
-                    => 'Codeacious\OAuth2Provider\Config\FactoryFactory',
-            'Codeacious\OAuth2Provider\Config\StorageFactory'
-                    => 'Codeacious\OAuth2Provider\Config\FactoryFactory',
-            'Codeacious\OAuth2Provider\Config\TokenTypeFactory'
-                    => 'Codeacious\OAuth2Provider\Config\FactoryFactory',
-        ),
-    ),
-);
+return [
+    'service_manager' => [
+        'factories' => [
+            Config\ClientAssertionTypeFactory::class => Config\FactoryFactory::class,
+            Config\GrantTypeFactory::class => Config\FactoryFactory::class,
+            Config\ResponseTypeFactory::class => Config\FactoryFactory::class,
+            Config\ScopeUtilFactory::class => Config\FactoryFactory::class,
+            Config\ServerFactory::class => Config\FactoryFactory::class,
+            Config\StorageFactory::class => Config\FactoryFactory::class,
+            Config\TokenTypeFactory::class => Config\FactoryFactory::class,
+        ],
+    ],
+];

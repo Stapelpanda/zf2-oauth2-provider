@@ -8,9 +8,9 @@ namespace Codeacious\OAuth2Provider\Config;
 
 use Codeacious\OAuth2Provider\Exception\ConfigurationException;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Filter\Word\UnderscoreToCamelCase;
-use Zend\Filter\Word\CamelCaseToUnderscore;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
 
 abstract class Factory
 {
@@ -55,7 +55,7 @@ abstract class Factory
     public abstract function create($config, $name=null);
 
     /**
-     * @param string $reference
+     * @param mixed $reference
      * @return object|null
      */
     protected function resolveReference($reference)

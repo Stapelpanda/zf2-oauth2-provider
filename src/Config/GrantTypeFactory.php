@@ -32,6 +32,9 @@ class GrantTypeFactory extends Factory
         //service name
         if (is_string($config))
         {
+            /**
+             * @var GrantTypeInterface $obj
+             */
             if (class_exists($config) && (!$this->services || !$this->services->has($config)))
                 $config = array('class' => $config);
             else if (($obj = $this->resolveReference($config)))

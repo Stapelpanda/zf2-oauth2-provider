@@ -8,11 +8,12 @@ namespace Codeacious\OAuth2Provider\Authentication;
 
 use Codeacious\OAuth2Provider\Provider;
 
-use Zend\Authentication\Adapter\AdapterInterface;
-use Zend\Authentication\Result as AuthResult;
-use Zend\Authentication\Adapter\Exception\RuntimeException;
-use Zend\Http\Request as HttpRequest;
-use Zend\Http\Response as HttpResponse;
+use Laminas\Authentication\Adapter\AdapterInterface;
+use Laminas\Authentication\Result as AuthResult;
+use Laminas\Authentication\Exception\ExceptionInterface as AuthException;
+use Laminas\Authentication\Adapter\Exception\RuntimeException;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Http\Response as HttpResponse;
 
 /**
  * ZF authentication adapter which authenticates an HTTP request using an OAuth 2.0 access token.
@@ -100,9 +101,8 @@ class AccessTokenAdapter implements AdapterInterface
     /**
      * Performs an authentication attempt
      *
-     * @return \Zend\Authentication\Result
-     * @throws \Zend\Authentication\Adapter\Exception\ExceptionInterface If authentication cannot be
-     *    performed
+     * @return AuthResult
+     * @throws AuthException If authentication cannot be performed
      */
     public function authenticate()
     {
@@ -122,7 +122,7 @@ class AccessTokenAdapter implements AdapterInterface
      * Set HTTP headers to prompt the client for authentication, and return a failed authentication
      * result.
      *
-     * @return \Zend\Authentication\Result
+     * @return AuthResult
      */
     protected function _failureResult()
     {

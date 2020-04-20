@@ -7,8 +7,8 @@
 namespace Codeacious\OAuth2Provider;
 
 use OAuth2\RequestInterface;
-use Zend\Http\PhpEnvironment\Request as HttpRequest;
-use Zend\Http\Header\ContentType;
+use Laminas\Http\PhpEnvironment\Request as HttpRequest;
+use Laminas\Http\Header\ContentType;
 
 /**
  * Wraps a ZF request object to create an OAuth2 library request object.
